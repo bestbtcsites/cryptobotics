@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROI Monitor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #f0f4f8;
+      color: #121212;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      font-size: 0.75em;
+    }
+
+    .info-bar {
+      display: flex;
+      flex-direction: row;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      font-size: 1.2em;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .info-section {
+      flex: 1;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .info-section:not(:last-child) {
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .label {
+      display: block;
+      color: #e0f2fe;
+      font-size: 1.1em;
+      margin-bottom: 6px;
+    }
+
+    .value {
+      font-weight: bold;
+      color: #ffffff;
+      font-size: 1.6em;
+    }
+
+    .progress-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #dbeafe;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+      height: 26px;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      transition: width 0.4s ease, background-color 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 5px 0 0 5px;
+      white-space: nowrap;
+      font-size: 1em;
+      background: linear-gradient(to right, #60a5fa, #2563eb);
+      color: #fff;
+    }
+
+    .completed-wrapper {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .star {
+      color: #3b82f6;
+      font-size: 1.3em;
+    }
+
+    .completed-message {
+      padding: 12px 20px;
+      background: #3b82f6;
+      color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 12px #60a5fa;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
+      }
+      to {
+        text-shadow: 0 0 10px #60a5fa, 0 0 20px #60a5fa;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="info-bar">
+    <div class="info-section">
+      <span class="label">Payout Ratio</span>
+      <span id="roi" class="value">--%</span>
+    </div>
+    <div class="info-section">
+      <span class="label">Monitored</span>
+      <span id="days" class="value">-- Days</span>
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar">0%</div>
+  </div>
+
+  <div id="completed" class="completed-wrapper">
+    <span class="star">★ ★ ★ ★ ★</span>
+    <span class="completed-message">🎉 100% PAYOUT RATIO COMPLETED 🎉</span>
+    <span class="star">★ ★ ★ ★ ★</span>
+  </div>
+
+  <script>
+    const startDate = new Date("2025-05-25");
+    const today = new Date();
+    const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
+    const payoutRatio = (1.20 * daysElapsed).toFixed(2);
+
+    document.getElementById("roi").innerText = payoutRatio + "%";
+    document.getElementById("days").innerText = daysElapsed + " Days";
+
+    const progressBar = document.getElementById("progress-bar");
+    const visualWidth = Math.min(payoutRatio, 100);
+    progressBar.style.width = visualWidth + "%";
+    progressBar.innerText = payoutRatio + "%";
+
+    if (parseFloat(payoutRatio) >= 100) {
+      document.getElementById("completed").style.display = "flex";
+    }
+  </script>
+
+</body>
+</html>
