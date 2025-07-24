@@ -140,10 +140,10 @@
   </div>
 
   <script>
-    const startDate = new Date("2025-05-27");
+    const startDate = new Date("2025-07-25");
     const today = new Date();
     const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
-    const payoutRatio = (1.20 * daysElapsed).toFixed(2);
+    const payoutRatio = (0.50 * daysElapsed).toFixed(2);
 
     document.getElementById("roi").innerText = payoutRatio + "%";
     document.getElementById("days").innerText = daysElapsed + " Days";
